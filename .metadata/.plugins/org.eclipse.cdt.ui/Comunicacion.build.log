@@ -1,0 +1,37 @@
+
+**** Build of configuration Debug for project Comunicacion ****
+
+"C:\\ti\\ccsv6\\utils\\bin\\gmake" -k all 
+'Building target: Comunicacion.out'
+'Invoking: MSP430 Linker'
+"C:/ti/ccsv6/tools/compiler/ti-cgt-msp430_4.4.3/bin/cl430" -vmspx --abi=eabi --data_model=restricted --use_hw_mpy=16 --advice:power=all -g --define=__MSP430FG4619__ --diag_warning=225 --display_error_number --diag_wrap=off --printf_support=minimal -z -m"Comunicacion.map" --heap_size=80 --stack_size=80 --cinit_hold_wdt=on -i"C:/ti/ccsv6/ccs_base/msp430/include" -i"C:/ti/ccsv6/tools/compiler/ti-cgt-msp430_4.4.3/lib" -i"C:/ti/ccsv6/tools/compiler/ti-cgt-msp430_4.4.3/include" --reread_libs --warn_sections --display_error_number --diag_wrap=off --xml_link_info="Comunicacion_linkInfo.xml" --use_hw_mpy=16 --rom_model -o "Comunicacion.out" "./main.obj" "./bsp/hal/hal_cc2500.obj" "./bsp/hal/hal_pin.obj" "./bsp/hal/hal_usci_spi.obj" "./bsp/hal/uart.obj" "./bsp/bsp.obj" "../lnk_msp430fg4619.cmd"  -l"libc.a" 
+<Linking>
+remark #10372-D: (ULP 4.1) Detected uninitialized Port 5 in this project. Recommend initializing all unused ports to eliminate wasted current consumption on unused pins.
+
+remark #10372-D: (ULP 4.1) Detected uninitialized Port 6 in this project. Recommend initializing all unused ports to eliminate wasted current consumption on unused pins.
+ undefined          first referenced
+  symbol                in file     
+remark #10372-D: (ULP 4.1) Detected uninitialized Port 7 in this project. Recommend initializing all unused ports to eliminate wasted current consumption on unused pins.
+ ---------          ----------------
+ LedVerde           ./bsp/bsp.obj   
+remark #10372-D: (ULP 4.1) Detected uninitialized Port 8 in this project. Recommend initializing all unused ports to eliminate wasted current consumption on unused pins.
+ app_RxPacketISR    ./bsp/bsp.obj   
+ app_TimerISR_1ms   ./bsp/bsp.obj   
+ app_TimerISR_1s    ./bsp/bsp.obj   
+ ciclo_correccion   ./bsp/bsp.obj   
+ cont_rebase_timer  ./bsp/bsp.obj   
+ correccion         ./bsp/bsp.obj   
+ proxima_correccion ./bsp/bsp.obj   
+
+error #10234-D: unresolved symbols remain
+remark #10372-D: (ULP 4.1) Detected uninitialized Port 9 in this project. Recommend initializing all unused ports to eliminate wasted current consumption on unused pins.
+error #10010: errors encountered during linking; "Comunicacion.out" not built
+remark #10372-D: (ULP 4.1) Detected uninitialized Port 10 in this project. Recommend initializing all unused ports to eliminate wasted current consumption on unused pins.
+gmake: *** [Comunicacion.out] Error 1
+gmake: Target `all' not remade because of errors.
+remark #10372-D: (ULP 4.1) Detected uninitialized Port A in this project. Recommend initializing all unused ports to eliminate wasted current consumption on unused pins.
+remark #10372-D: (ULP 4.1) Detected uninitialized Port B in this project. Recommend initializing all unused ports to eliminate wasted current consumption on unused pins.
+
+>> Compilation failure
+
+**** Build Finished ****

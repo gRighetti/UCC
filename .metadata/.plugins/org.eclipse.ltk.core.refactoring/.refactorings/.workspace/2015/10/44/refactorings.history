@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Rename resource &apos;Copy of ComunicacionModuloTX&apos; to &apos;ComunicacionModuloTX&apos;" description="Rename resource &apos;Copy of ComunicacionModuloTX&apos;" flags="7" id="org.eclipse.ltk.core.refactoring.rename.resource" input="/Copy of ComunicacionModuloTX" name="ComunicacionModuloTX" stamp="1446211458746" updateReferences="true"/>
+</session>

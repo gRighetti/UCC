@@ -1,0 +1,24 @@
+
+**** Build of configuration Debug for project Comunicacion_modulos ****
+
+"C:\\ti\\ccsv6\\utils\\bin\\gmake" -k -j 4 all 
+'Building file: ../src/bsp/bsp.c'
+'Invoking: MSP430 Compiler'
+"C:/ti/ccsv6/tools/compiler/ti-cgt-msp430_4.4.3/bin/cl430" -vmspx --abi=eabi --data_model=restricted -Ooff --use_hw_mpy=16 --include_path="C:/ti/ccsv6/ccs_base/msp430/include" --include_path="C:/ti/ccsv6/tools/compiler/ti-cgt-msp430_4.4.3/include" --advice:power_severity=suppress --advice:power="1,2,3,4,5,6,7,8,9,10,11,12,13,14,15" -g --define=__MSP430FG4619__ --diag_warning=225 --display_error_number --diag_wrap=off --printf_support=nofloat --preproc_with_compile --preproc_dependency="src/bsp/bsp.pp" --obj_directory="src/bsp"  "../src/bsp/bsp.c"
+"../src/bsp/bsp.c", line 137: warning #169-D: argument of type "USARTUARTRegs *" is incompatible with parameter of type "USCIUARTRegs *"
+"../src/bsp/bsp.c", line 94: warning #179-D: variable "i" was declared but never referenced
+"../src/bsp/bsp.c", line 271: warning #225-D: function "__BIC_SR_IRQ" declared implicitly
+"../src/bsp/bsp.c", line 395: warning #225-D: function "AD10_Convert" declared implicitly
+"../src/bsp/bsp.c", line 519: warning #225-D: function "uart_USCI_A0_RX_ISR" declared implicitly
+"../src/bsp/bsp.c", line 526: warning #225-D: function "uart_USCI_A0_TX_ISR" declared implicitly
+"../src/bsp/bsp.c", line 535: warning #9-D: nested comment is not allowed
+'Finished building: ../src/bsp/bsp.c'
+' '
+'Building target: Comunicacion_modulos.out'
+'Invoking: MSP430 Linker'
+"C:/ti/ccsv6/tools/compiler/ti-cgt-msp430_4.4.3/bin/cl430" -vmspx --abi=eabi --data_model=restricted -Ooff --use_hw_mpy=16 --advice:power_severity=suppress --advice:power="1,2,3,4,5,6,7,8,9,10,11,12,13,14,15" -g --define=__MSP430FG4619__ --diag_warning=225 --display_error_number --diag_wrap=off --printf_support=nofloat -z -m"Comunicacion_modulos.map" --heap_size=120 --stack_size=120 --cinit_hold_wdt=on -i"C:/ti/ccsv6/ccs_base/msp430/include" -i"C:/ti/ccsv6/tools/compiler/ti-cgt-msp430_4.4.3/lib" -i"C:/ti/ccsv6/tools/compiler/ti-cgt-msp430_4.4.3/include" --reread_libs --warn_sections --display_error_number --diag_wrap=off --xml_link_info="Comunicacion_modulos_linkInfo.xml" --use_hw_mpy=16 --rom_model -o "Comunicacion_modulos.out" "./src/main.obj" "./src/bsp/hal/hal_cc2500.obj" "./src/bsp/hal/hal_pin.obj" "./src/bsp/hal/hal_usci_spi.obj" "./src/bsp/hal/uart.obj" "./src/bsp/bsp.obj" "../lnk_msp430fg4619.cmd"  -l"libc.a" 
+<Linking>
+'Finished building target: Comunicacion_modulos.out'
+' '
+
+**** Build Finished ****

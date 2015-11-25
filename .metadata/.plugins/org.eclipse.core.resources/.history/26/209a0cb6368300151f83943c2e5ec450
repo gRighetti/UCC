@@ -1,0 +1,609 @@
+/**
+ * @brief BSP generico de inicializacion de hardware.
+ */
+
+#include "system.h"
+#include "bsp.h"
+
+#include "hal/hal_pin.h"
+#include "hal/hal_usci_spi.h"
+#include "hal/hal_cc2500.h"
+#include "hal/uart.h"
+//#include "hal/ADC10.h"
+#include <math.h>
+
+/**
+ * @defgroup Pines Pines del BSP
+ * @{
+ */
+// ------------------------------------- PINs --------------------------------------------
+// entradas salidas
+const pinConfig pinLedVerde = { HAL_PORT9, 4, HAL_PIN_DIG_OUT, 0, BIT4 };
+const pinConfig pinLedRojo = { HAL_PORT9, 5, HAL_PIN_DIG_OUT, 0, BIT5 };
+
+const pinConfig pinSW1 = { HAL_PORT1, 3, HAL_PIN_DIG_IN, 0, BIT3 };
+const pinConfig pinSW2 = { HAL_PORT1, 4, HAL_PIN_DIG_IN, 0, BIT4 };
+
+// Pines Amplificador
+const pinConfig cc_PAEN = { HAL_PORT4, 6, HAL_PIN_DIG_OUT, 0, BIT6 };
+const pinConfig cc_LNAEN = { HAL_PORT4, 7, HAL_PIN_DIG_OUT, 1, BIT7 };
+
+// USCI SPI - CC2500 PINS
+
+const pinConfig cc_gdo0 = { HAL_PORT2, 2, HAL_PIN_INT_HILO, 0, BIT2 };
+const pinConfig cc_gdo2 = { HAL_PORT2, 3, HAL_PIN_DIG_IN, 0, BIT3 };
+const pinConfig cc_spinCS = { HAL_PORT7, 0, HAL_PIN_DIG_OUT, 1, BIT0 };
+const pinConfig cc_spiSIMO = { HAL_PORT7, 1, HAL_PIN_SEC_FUNC_OUT, 0, BIT1 };
+const pinConfig cc_spiSOMI = { HAL_PORT7, 2, HAL_PIN_SEC_FUNC, 0, BIT2 };
+const pinConfig cc_spiCLK = { HAL_PORT7, 3, HAL_PIN_SEC_FUNC_OUT, 0, BIT3 };
+
+// Pines UART
+const pinConfig uart_TX = { HAL_PORT4, 0, HAL_PIN_SEC_FUNC_OUT, 0, BIT0 };
+const pinConfig uart_RX = { HAL_PORT4, 1, HAL_PIN_SEC_FUNC, 0, BIT1 };
+/// @}
+
+// ----------------------------- EXTERN APP FUNCTIONS --------------------------------------
+extern void app_TimerISR_1ms(void);
+extern void app_TimerISR_1s(void);
+extern void app_RxPacketISR(void);
+//extern void procesar_uart(char);
+
+// --------------------------------- BSP VARIABLES -----------------------------------------
+uint16_t bsp_contMs;
+
+char rf_rxBuffer[20];
+char rf_rxLen;
+char rf_rxRssi;
+char rf_rxLqi;
+char rf_rxAddr;
+
+// CC2500
+char paTable[1] = { 0xFF };
+char paTableLen = 1;
+
+// Datos para UART
+
+UARTConfig cnf;
+USARTUARTRegs uartUsartRegs;
+
+#define BUFFER_LENGTH 15
+unsigned char uartTxBuf[BUFFER_LENGTH];
+unsigned char uartRxBuf[BUFFER_LENGTH];
+
+unsigned char bufferRxUart[BUFFER_LENGTH];
+
+extern uint8_t net_myAddr;
+
+//Timer
+extern uint8_t cont_rebase_timer;
+extern uint16_t tar_segundo;
+extern uint32_t timestamp;
+extern uint32_t timestamprx;
+extern uint32_t diferencia[2];
+uint8_t flag_wakeup = 0;
+
+uint32_t bsp_contTAR = 0;
+char usartRxRegistro;
+uint8_t cont = 0;
+char datoRx;
+uint8_t datoTiempo=0;
+
+/**
+ * @brief Inicializacion del BSP
+ */
+void bsp_Init(void) {
+	int i;
+	WDTCTL = WDTPW | WDTHOLD;	// Stop watchdog timer
+	FLL_CTL0 = 0;
+	SCFI0 = FN_2 + FLLD0; // x2 DCO, 4MHz nominal DCO  agregado desde el de marcus
+	SCFQCTL = 30;                           // (30+1) x 32768 = 1.015808Mhz
+
+//	DCOCTL = CALDCO_16MHZ;		// MCLK = DCO = 1MHz;
+//	BCSCTL1 = CALBC1_16MHZ;
+
+//	BCSCTL1 &= ~XTS;			// ACLK = LFXT1 = LF xtal
+//	BCSCTL3 &= ~LFXT1S_3;		// range = 32.768khz
+//	BCSCTL3 |= XCAP_3;
+
+	do {
+		IFG1 &= ~OFIFG;
+		for (i = 0xFF; i > 0; i--)
+			// Espero a que el osc arranque
+			;
+	} while (IFG1 & OFIFG);
+
+	// BCSCTL2 |= SELM_0; // MCLK = LFXT1 = 32.768khz
+
+	// Inicializacion de UART
+	hal_pin_init(&uart_TX);
+	hal_pin_init(&uart_RX);
+	initUartDriver();
+	// Configure UART Module on USCIA1
+	cnf.moduleName = USART_1; //USCI_A0;
+	cnf.portNum = PORT_4;       //cnf.portNum = PORT_5;
+	cnf.RxPinNum = PIN1;		//cnf.RxPinNum = PIN7;
+	cnf.TxPinNum = PIN0;        //cnf.TxPinNum = PIN6;
+	// 115200 Baud from 8MHz SMCLK
+	cnf.clkRate = 1000000L;
+	cnf.baudRate = 2400;
+	cnf.clkSrc = UART_CLK_SRC_SMCLK;
+	// 8N1
+	cnf.databits = 8;
+	cnf.parity = UART_PARITY_NONE;
+	cnf.stopbits = 1;
+	//cnf.usartRegs=usartRxRegistro;
+	int res = configUSARTUart(&cnf, &uartUsartRegs);
+//	int res = configUSCIUart(&cnf, &uartUsartRegs);
+
+	if (res != UART_SUCCESS) {
+		// Failed to initialize UART for some reason
+		__no_operation();
+	}
+
+	setUartTxBuffer(&cnf, uartTxBuf, BUFFER_LENGTH);
+	setUartRxBuffer(&cnf, uartRxBuf, BUFFER_LENGTH);
+
+	enableUartRx(&cnf);
+
+	// Inicializo los leds y pulsadores
+	LedVerde = hal_pin_init(&pinLedVerde);
+	LedRojo = hal_pin_init(&pinLedRojo);
+	Switch1 = hal_pin_init(&pinSW1);
+
+	hal_pin_config(&pinSW1, HAL_PIN_INT_HILO);
+//	hal_pin_init(&pinVset);
+//	hal_pin_init(&pinActMedicion);
+//	hal_pin_init(&pinADBateria);
+
+	// Configuracion pines CC2500
+	hal_pin_init(&cc_gdo0);
+	hal_pin_init(&cc_gdo2);
+	hal_pin_init(&cc_PAEN);
+	hal_pin_init(&cc_LNAEN);   							//Ver esto en la placa
+
+	// Configuracion pines y SPI CC2500
+	//spi1_setup((uint8_t*) &UCB0CTL0);
+	spi1_setup((uint8_t*) &UCA0CTL0);
+	hal_pin_init(&cc_spinCS);
+	hal_pin_init(&cc_spiSIMO);
+	hal_pin_init(&cc_spiSOMI);
+	hal_pin_init(&cc_spiCLK);
+	spi1_start();
+
+	/*
+	 * Revisar esta parte
+	 */
+	// Inicializacion del transceiver CC2500
+	hal_cc2500_powerupReset();               // Reset CCxxxx
+	hal_cc2500_WriteRFSettings();             // Write RF settings to config reg
+	hal_cc2500_writeBurstReg(TI_CCxxx0_PATABLE, paTable, paTableLen); //Write PATABLE
+	hal_cc2500_writeReg(TI_CCxxx0_ADDR, net_myAddr);          // Device address.
+	hal_cc2500_strobe(TI_CCxxx0_SIDLE);  // Initialize CC2500 in MODO RECEPCION!
+	/*
+	 hal_cc2500_writeReg(TI_CCxxx0_CHANNR, 0x07); // Channel number.
+	 hal_cc2500_writeReg(TI_CCxxx0_ADDR, 0);          // Device address.
+	 Como esta en el de Marku*/
+	/*
+	 // Inicializacion del timmer
+	 TACTL = (TASSEL_1 + ID_0 + MC_2);
+	 TACCTL1 = (CM_0 + CCIS_2);
+	 TACCR1 += 0x8000;
+	 TACCTL1 &= ~(CCIFG);
+	 TACCTL1 |= CCIE;
+	 */
+	// Inicializacion del timmer
+	TBCTL = (TBSSEL_1 + ID_0 + MC_2 + CNTL_0);
+	TBCCTL1 = (CM_0 + CCIS_2);
+	TBCCR1 += 33;
+	TBCCTL1 &= ~(CCIFG);
+	TBCCTL1 |= CCIE;
+
+	/*
+	 // Inicializo el AD
+	 hal_pin_init(&oa_sel_pt100);
+	 hal_pin_init(&oa_pin_0);
+	 hal_pin_init(&oa_pin_1);
+	 hal_pin_init(&oa_pin_2);
+	 adc_init();
+	 */
+
+	__enable_interrupt();
+}
+/*
+ int bsp_GetSemilla() {
+ return TAR;
+ }*/
+
+void bsp_msDelay(uint16_t ms) {
+	bsp_contMs = ms;
+	while (bsp_contMs)
+		;
+}
+
+// ----------------------- Led Services ---------------------------
+void led_On(const void* l) {
+	hal_pin_out((const pinConfig *) l, 1);
+}
+
+void led_Off(const void* l) {
+	hal_pin_out((const pinConfig *) l, 0);
+}
+void led_Toggle(const void* l) {
+	hal_pin_toggle((const pinConfig *) l);
+}
+/*
+ void Timer_Habilitar(void) {
+ TACTL = (TASSEL_1 + ID_0 + MC_2);
+ }*//*
+ void Timer_Desabilitar(void) {
+ TACTL = (TASSEL_1 + ID_0 + MC_0);
+ }*/
+/*
+ void sleep() {
+
+ P1DIR |= 0xF8;
+ P1OUT &= 0x07;
+
+ P2DIR |= 0x38;
+ P2OUT &= 0xC7;
+
+ P3DIR |= 0xC0;
+ P3OUT &= 0x3F;
+
+ P4DIR |= 0xF1;
+ P4OUT &= 0x0E;
+
+ RF_sleep();
+ //	hal_pin_out(&pinVset, 1);  // regulador con la salida en 2.2v
+ LPM3 + GIE;
+
+ }*/
+/*
+ void wakeup() {
+ //	hal_pin_out(&pinVset, 0);  // regulador con la salida en 3.3v
+ flag_wakeup = 1;
+ RF_PwrUpRx();
+
+ __BIC_SR_IRQ(LPM3_bits);
+
+ }*//*
+ // ----------------------- Swich Services -------------------------
+ uint8_t sw_state(const void* s) {
+ uint16_t pepe;
+
+ pepe = hal_pin_in((const pinConfig *) s);
+ return pepe;
+ }
+ */
+//------------------------ UART Services  -------------------------
+// Buf es terminado con 0, el 0 no se transmite
+void serie_writeString(unsigned char * buf, int len) {
+	uartSendDataBlocking(&cnf, buf, len);
+}
+
+int serie_cantRX() {
+	return numUartBytesReceived(&cnf);
+}
+
+int serie_read(unsigned char * data, int numBytesToRead) {
+	return readRxBytes(&cnf, data, numBytesToRead, 0);
+}
+
+void serie_SendString(char * buf) {
+	uartSendStringBlocking(&cnf, buf);
+}
+/*
+ *********************************************************************************************************
+ *                                     RF_SendPacket
+ *
+ * Description   : This function sends a Packet through the RF transceiver
+ * Argument      : None
+ * Returns       : None
+ *********************************************************************************************************
+ */
+char RF_SendPacket(char addr, char *txBuffer, char size) {
+	return hal_cc2500_sendPacket(addr, txBuffer, size);
+}
+
+/*
+ *********************************************************************************************************
+ *                                     RF_ReceivePacket
+ *
+ * Description   : This function receives a Packet from the RF transceiver
+ * Argument      : None
+ * Returns       : None
+ *********************************************************************************************************
+ */
+char RF_ReceivePacket(char *addr, char *rxBuffer, char *length, char *rssi,
+		char *lqi) {
+	return hal_cc2500_receivePacket(addr, rxBuffer, length, rssi, lqi);
+}
+
+/*
+ *********************************************************************************************************
+ *                                     RF_PwrUpRx
+ *
+ * Description   : This function sets the RF transceiver in Rx Mode
+ * Argument      : None
+ * Returns       : None
+ *********************************************************************************************************
+ */
+void RF_PwrUpRx(void) {
+	hal_cc2500_strobe(TI_CCxxx0_SRX);
+}
+/*
+ void RF_sleep(void) {
+ hal_cc2500_strobe(TI_CCxxx0_SIDLE);
+
+ hal_cc2500_strobe(TI_CCxxx0_SPWD);
+
+ }*/
+
+uint8_t RF_rxDataReady(void) {
+
+	if (bspFlags.rf_rxDataReady)
+		return 1;
+	else
+		return 0;
+}
+
+void RF_getRxPacket(char *buffer, uint8_t size) {
+
+	uint8_t i;
+
+	if (bspFlags.rf_rxDataReady) {
+		bspFlags.rf_rxDataReady = 0;
+		if (size >= rf_rxLen) {
+			for (i = 0; i < rf_rxLen; i++) {
+				*(buffer + i) = rf_rxBuffer[i];
+
+			}
+		}
+	}
+}
+
+uint8_t uart_rxData(void) {
+
+	if (bspFlags.recibiUart == 1)
+		return 1;
+	else
+		return 0;
+}
+char getDato(void) {
+	bspFlags.recibiUart = 0;
+	return datoRx;
+}
+void uart_rxGetPack() {
+	int i;
+	bspFlags.recibiUart = 0;
+	for (i = 0; i <= cnf.rxBytesReceived; i++) {
+		bufferRxUart[i] = uartRxBuf[i];
+	}
+}
+/*
+ uint16_t get_tar(void) {
+
+ return TAR;
+
+ }*/
+/*
+ void escribir_TimeStamp(uint16_t tar, uint16_t contador_rebases) {
+ TAR = tar;
+ bsp_contTAR = contador_rebases;
+ }
+
+ uint32_t TimeStamp(void) {
+ static uint16_t tar;
+ static uint32_t time_stamp;
+
+ do {
+ bspFlags.timer_Rebase = 0;
+ tar = TAR;
+ time_stamp = (bsp_contTAR * 65536) + tar;
+ } while (bspFlags.timer_Rebase);
+
+ return time_stamp;
+ }*/
+/*
+ unsigned int TensionBateria(void) {
+ return AD10_Convert(INCH_12);
+ }
+ void serial_writeNumber(uint32_t num) {
+ uint8_t buffer_num[10];
+ uint8_t cont = 0;
+ uint32_t val;
+
+ do {
+ val = num / 10;
+ buffer_num[cont] = ((num - (val * 10)) + 0x30);
+ num = val;
+ cont++;
+ } while (val);
+
+ do {
+ cont--;
+ uartSendDataBlocking(&cnf, &buffer_num[cont], 1);
+
+ } while (cont);
+
+ }
+ */
+// ----------------------- Interrupt services Routines -------------------------
+#pragma vector = PORT2_VECTOR
+__interrupt void port2_ISR(void) {
+	uint8_t size = 20;
+
+	if (hal_pin_intGetFlag(&cc_gdo0)) {
+		hal_pin_intClearFlag(&cc_gdo0);
+
+		if (hal_cc2500_receivePacket(&rf_rxAddr, rf_rxBuffer, (char*) &size,
+				&rf_rxRssi, &rf_rxLqi)) {
+
+			P1OUT ^= 0x02;
+
+			bspFlags.rf_rxDataReady = 1;
+			rf_rxLen = size;
+
+			app_RxPacketISR();
+		}
+
+	}
+}
+/*
+ #pragma vector = TIMER0_A1_VECTOR
+ __interrupt void Ta1_ISR(void) {
+ static uint16_t cont = 0;
+ static uint16_t cont_serie = 0;
+
+ extern int16_t correccion;
+ extern int32_t ciclo_correccion;
+ extern int32_t proxima_correccion;
+
+ if (TACCTL1 & CCIFG) {
+
+ if ((TimeStamp() >= proxima_correccion) && bspFlags.correccion) { // pregunto si se cumplio el tiempo para corregir el dezfasaje
+
+ TACCR1 += (0x8000 + correccion); // incremento el timer mas la correccion;
+ proxima_correccion += ciclo_correccion;
+
+ } else {
+ TACCR1 += 0x8000;
+ }
+ TACCTL1 &= ~CCIFG;
+ //.................................................... Calculo Timestamp
+ if (cont) {
+ cont = 0;
+ bsp_contTAR++;
+ bspFlags.timer_Rebase = 1;
+ } else {
+ cont++;
+ }
+ //....................................................
+ if (bspFlags.calibracion)
+ cont_rebase_timer++; //para ver cuantas veces rebasa el timer para la calibracion
+ //.................................................... cada cuanto madar info por el puerto serie
+ if (cont_serie >= 150) {
+ cont_serie = 0;
+ //bspFlags.contro_serie = 1;
+ } else {
+ cont_serie++;
+ }
+ //....................................................
+ app_TimerISR_1s();
+
+ }
+
+ }
+ */
+#pragma vector = TIMER0_B1_VECTOR
+__interrupt void Tb1_ISR(void) {
+
+	if (TBCCTL1 & CCIFG) {
+		TBCCR1 += 33;
+		TBCCTL1 &= ~CCIFG;
+
+		if (bsp_contMs) {
+			bsp_contMs--;
+		}
+
+		app_TimerISR_1ms();
+	}
+}
+
+#pragma vector = PORT1_VECTOR
+__interrupt void Port1_ISR(void) {
+
+	if (hal_pin_intGetFlag(&pinSW1)) {
+		//TACTL |= TACLR;
+		//TACCR1 = 0x8000;
+		//bspFlags.enviarDato = 1;
+		bspFlags.procesar = 1;
+		//led_Toggle(LedVerde);
+		hal_pin_intClearFlag(&pinSW1);
+	}
+}
+/*
+ #pragma vector = PORT1_VECTOR
+ __interrupt void Port1_ISR(void) {
+
+ if (hal_pin_intGetFlag(&pinSW1)) {
+ //TACTL |= TACLR;
+ //TACCR1 = 0x8000;
+ bspFlags.enviarSerie = 1;
+
+ hal_pin_intClearFlag(&pinSW1);
+ led_Toggle(LedRojo);
+ }
+ }*/
+/*
+ #pragma vector=USCIAB0RX_VECTOR
+ __interrupt void USCI_A0_RX_ISR(void) {
+
+ uart_USCI_A0_RX_ISR();
+
+ }
+
+ #pragma vector=USCIAB0TX_VECTOR
+ __interrupt void USCI_A0_TX_ISR(void) {
+ uart_USCI_A0_TX_ISR();
+
+ }
+ */
+#pragma vector= ADC10_VECTOR,TIMERA0_VECTOR,WDT_VECTOR,   \
+TIMERB0_VECTOR, NMI_VECTOR, RESET_VECTOR
+
+__interrupt void ISR_trap(void) {
+
+	/* For debugging purposes, you can trap the CPU & code execution here with an
+
+	 infinite loop */
+
+	while (1)
+
+		;
+
+}
+
+#pragma vector= USART1RX_VECTOR
+__interrupt void usart1_rx(void) {
+
+	led_Toggle(LedVerde);
+	//bspFlags.recibiUart = 1;
+	// usart1_rx_ISR();
+	datoRx = usart1_rx_char_ISR();
+	if (datoRx == 0xFF && cont==0) {
+		dato_tiempo=1;
+	}
+	if (dato_tiempo){
+		cont++;
+		if(cont>3 && cont<8){
+			bspFlags.datoTiempo=1;
+		}
+		if(datoRx==0xFF && cont==8){
+			cont=0;
+			led_Off(LedVerde);
+			bspFlags.procesarTiempo = 1;
+		}
+	}
+	bspFlags.recibiUart = 1;
+	cont++;
+	//usart1_rx_ISR(void)
+	if (cont == 15) { //&& datoRx==0xFF){
+		cont = 0;
+		led_Off(LedVerde);
+		bspFlags.procesar = 1;
+
+	}
+
+	//procesar_uart(uartRxBuf);
+	//char usart1_rx_char_ISR(void);
+
+}
+
+/*
+ #pragma vector=USART1TX_VECTOR
+ __interrupt void usart1_tx(void){
+ usart1_tx_ISR();
+ }
+ */
+

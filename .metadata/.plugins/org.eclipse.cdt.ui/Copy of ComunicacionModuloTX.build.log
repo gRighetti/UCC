@@ -1,0 +1,23 @@
+
+**** Build of configuration Debug for project Copy of ComunicacionModuloTX ****
+
+"C:\\ti\\ccsv6\\utils\\bin\\gmake" -k -j 4 all 
+'Building file: ../src/bsp/hal/hal_cc2500.c'
+'Building file: ../src/bsp/bsp.c'
+'Invoking: MSP430 Compiler'
+"C:/ti/ccsv6/tools/compiler/ti-cgt-msp430_4.4.3/bin/cl430" -vmspx --abi=eabi --data_model=restricted -Ooff --use_hw_mpy=16 --include_path="C:/ti/ccsv6/ccs_base/msp430/include" --include_path="C:/ti/ccsv6/tools/compiler/ti-cgt-msp430_4.4.3/include" --advice:power_severity=suppress --advice:power="1,2,3,4,5,6,7,8,9,10,11,12,13,14,15" -g --define=__MSP430FG4619__ --diag_warning=225 --display_error_number --diag_wrap=off --printf_support=nofloat --preproc_with_compile --preproc_dependency="src/bsp/hal/hal_cc2500.pp" --obj_directory="src/bsp/hal"  "../src/bsp/hal/hal_cc2500.c"
+'Invoking: MSP430 Compiler'
+"C:/ti/ccsv6/tools/compiler/ti-cgt-msp430_4.4.3/bin/cl430" -vmspx --abi=eabi --data_model=restricted -Ooff --use_hw_mpy=16 --include_path="C:/ti/ccsv6/ccs_base/msp430/include" --include_path="C:/ti/ccsv6/tools/compiler/ti-cgt-msp430_4.4.3/include" --advice:power_severity=suppress --advice:power="1,2,3,4,5,6,7,8,9,10,11,12,13,14,15" -g --define=__MSP430FG4619__ --diag_warning=225 --display_error_number --diag_wrap=off --printf_support=nofloat --preproc_with_compile --preproc_dependency="src/bsp/bsp.pp" --obj_directory="src/bsp"  "../src/bsp/bsp.c"
+"../src/bsp/bsp.c", line 552: warning #2580-D: pragma vector= accepts numeric arguments or "unused_interrupts" but not ADC10_VECTOR
+'Finished building: ../src/bsp/bsp.c'
+' '
+'Finished building: ../src/bsp/hal/hal_cc2500.c'
+' '
+'Building target: Copy of ComunicacionModuloTX.out'
+'Invoking: MSP430 Linker'
+"C:/ti/ccsv6/tools/compiler/ti-cgt-msp430_4.4.3/bin/cl430" -vmspx --abi=eabi --data_model=restricted -Ooff --use_hw_mpy=16 --advice:power_severity=suppress --advice:power="1,2,3,4,5,6,7,8,9,10,11,12,13,14,15" -g --define=__MSP430FG4619__ --diag_warning=225 --display_error_number --diag_wrap=off --printf_support=nofloat -z -m"Copy of ComunicacionModuloTX.map" --heap_size=120 --stack_size=120 --cinit_hold_wdt=on -i"C:/ti/ccsv6/ccs_base/msp430/include" -i"C:/ti/ccsv6/tools/compiler/ti-cgt-msp430_4.4.3/lib" -i"C:/ti/ccsv6/tools/compiler/ti-cgt-msp430_4.4.3/include" --reread_libs --warn_sections --display_error_number --diag_wrap=off --xml_link_info="Copy of ComunicacionModuloTX_linkInfo.xml" --use_hw_mpy=16 --rom_model -o "Copy of ComunicacionModuloTX.out" "./src/main.obj" "./src/bsp/hal/hal_cc2500.obj" "./src/bsp/hal/hal_pin.obj" "./src/bsp/hal/hal_usci_spi.obj" "./src/bsp/hal/uart.obj" "./src/bsp/bsp.obj" "../lnk_msp430fg4619.cmd"  -l"libc.a" 
+<Linking>
+'Finished building target: Copy of ComunicacionModuloTX.out'
+' '
+
+**** Build Finished ****

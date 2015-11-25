@@ -1,0 +1,1063 @@
+******************************************************************************
+                  MSP430 Linker PC v4.4.3                      
+******************************************************************************
+>> Linked Fri Oct 30 10:16:55 2015
+
+OUTPUT FILE NAME:   <Copy of ComunicacionModuloTX.out>
+ENTRY POINT SYMBOL: "_c_int00_noargs_noexit"  address: 000021e6
+
+
+MEMORY CONFIGURATION
+
+         name            origin    length      used     unused   attr    fill
+----------------------  --------  ---------  --------  --------  ----  --------
+  SFR                   00000000   00000010  00000000  00000010  RWIX
+  PERIPHERALS_8BIT      00000010   000000f0  00000000  000000f0  RWIX
+  PERIPHERALS_16BIT     00000100   00000100  00000000  00000100  RWIX
+  INFOB                 00001000   00000080  00000000  00000080  RWIX
+  INFOA                 00001080   00000080  00000000  00000080  RWIX
+  RAM                   00001100   00001000  0000017a  00000e86  RWIX
+  FLASH                 00002100   0000dec0  00000360  0000db60  RWIX
+  INT00                 0000ffc0   00000002  00000000  00000002  RWIX
+  INT01                 0000ffc2   00000002  00000000  00000002  RWIX
+  INT02                 0000ffc4   00000002  00000000  00000002  RWIX
+  INT03                 0000ffc6   00000002  00000000  00000002  RWIX
+  INT04                 0000ffc8   00000002  00000000  00000002  RWIX
+  INT05                 0000ffca   00000002  00000000  00000002  RWIX
+  INT06                 0000ffcc   00000002  00000000  00000002  RWIX
+  INT07                 0000ffce   00000002  00000000  00000002  RWIX
+  INT08                 0000ffd0   00000002  00000000  00000002  RWIX
+  INT09                 0000ffd2   00000002  00000000  00000002  RWIX
+  INT10                 0000ffd4   00000002  00000000  00000002  RWIX
+  INT11                 0000ffd6   00000002  00000000  00000002  RWIX
+  INT12                 0000ffd8   00000002  00000000  00000002  RWIX
+  INT13                 0000ffda   00000002  00000000  00000002  RWIX
+  INT14                 0000ffdc   00000002  00000002  00000000  RWIX
+  INT15                 0000ffde   00000002  00000002  00000000  RWIX
+  INT16                 0000ffe0   00000002  00000002  00000000  RWIX
+  INT17                 0000ffe2   00000002  00000002  00000000  RWIX
+  INT18                 0000ffe4   00000002  00000002  00000000  RWIX
+  INT19                 0000ffe6   00000002  00000002  00000000  RWIX
+  INT20                 0000ffe8   00000002  00000002  00000000  RWIX
+  INT21                 0000ffea   00000002  00000002  00000000  RWIX
+  INT22                 0000ffec   00000002  00000002  00000000  RWIX
+  INT23                 0000ffee   00000002  00000002  00000000  RWIX
+  INT24                 0000fff0   00000002  00000002  00000000  RWIX
+  INT25                 0000fff2   00000002  00000002  00000000  RWIX
+  INT26                 0000fff4   00000002  00000002  00000000  RWIX
+  INT27                 0000fff6   00000002  00000002  00000000  RWIX
+  INT28                 0000fff8   00000002  00000002  00000000  RWIX
+  INT29                 0000fffa   00000002  00000002  00000000  RWIX
+  INT30                 0000fffc   00000002  00000002  00000000  RWIX
+  RESET                 0000fffe   00000002  00000002  00000000  RWIX
+  FLASH2                00010000   00010000  000014f2  0000eb0e  RWIX
+
+
+SECTION ALLOCATION MAP
+
+ output                                  attributes/
+section   page    origin      length       input sections
+--------  ----  ----------  ----------   ----------------
+.bss       0    00001100    000000df     UNINITIALIZED
+                  00001100    0000002e     (.common:cnf)
+                  0000112e    0000002c     (.common:uartUsartRegs)
+                  0000115a    00000014     (.common:prtInfList)
+                  0000116e    00000014     (.common:rf_rxBuffer)
+                  00001182    00000012     (.common:rxPacket)
+                  00001194    00000010     (.common:rxBufferRecibi)
+                  000011a4    00000010     (.common:uartRxBuf)
+                  000011b4    00000010     (.common:uartTxBuf)
+                  000011c4    00000004     (.common:LedRojo)
+                  000011c8    00000004     (.common:LedVerde)
+                  000011cc    00000004     (.common:Switch1)
+                  000011d0    00000004     (.common:spiBaseAdd)
+                  000011d4    00000002     (.common:bspFlags)
+                  000011d6    00000002     (.common:bsp_contMs)
+                  000011d8    00000001     (.common:datoRx)
+                  000011d9    00000001     (.common:i)
+                  000011da    00000001     (.common:rf_rxAddr)
+                  000011db    00000001     (.common:rf_rxLen)
+                  000011dc    00000001     (.common:rf_rxLqi)
+                  000011dd    00000001     (.common:rf_rxRssi)
+                  000011de    00000001     (.common:rxBuffer)
+
+.data      0    000011e0    00000023     UNINITIALIZED
+                  000011e0    0000001a     main.obj (.data)
+                  000011fa    00000007     bsp.obj (.data)
+                  00001201    00000001     --HOLE--
+                  00001202    00000001     bsp.obj (.data:paTable)
+
+.stack     0    00002088    00000078     UNINITIALIZED
+                  00002088    00000004     rts430x_lc_rd_eabi.lib : boot.obj (.stack)
+                  0000208c    00000074     --HOLE--
+
+.text:_isr 
+*          0    00002100    00000108     
+                  00002100    0000005c     bsp.obj (.text:_isr:port2_ISR)
+                  0000215c    0000003e     bsp.obj (.text:_isr:usart1_rx)
+                  0000219a    00000028     bsp.obj (.text:_isr:Port1_ISR)
+                  000021c2    00000024     bsp.obj (.text:_isr:Tb1_ISR)
+                  000021e6    0000001a     rts430x_lc_rd_eabi.lib : boot_special.obj (.text:_isr:_c_int00_noargs_noexit)
+                  00002200    00000006                            : isr_trap.obj (.text:_isr:__TI_ISR_TRAP)
+                  00002206    00000002     bsp.obj (.text:_isr:ISR_trap)
+
+.const     0    00002208    0000021c     
+                  00002208    00000190     hal_pin.obj (.const:pinPort)
+                  00002398    0000008c     bsp.obj (.const)
+
+.cinit     0    00002424    0000003c     
+                  00002424    00000019     (.cinit..data.load) [load image, compression = rle]
+                  0000243d    00000001     --HOLE-- [fill = 0]
+                  0000243e    0000000c     (__TI_handler_table)
+                  0000244a    00000006     (.cinit..bss.load) [load image, compression = zero_init]
+                  00002450    00000010     (__TI_cinit_table)
+
+.init_array 
+*          0    00002100    00000000     UNINITIALIZED
+
+.TI.persistent 
+*          0    000011e0    00000000     UNINITIALIZED
+
+DAC12      0    0000ffdc    00000002     
+                  0000ffdc    00000002     rts430x_lc_rd_eabi.lib : int14.obj (.int14)
+
+DMA        0    0000ffde    00000002     
+                  0000ffde    00000002     rts430x_lc_rd_eabi.lib : int15.obj (.int15)
+
+BASICTIMER 
+*          0    0000ffe0    00000002     
+                  0000ffe0    00000002     rts430x_lc_rd_eabi.lib : int16.obj (.int16)
+
+PORT2      0    0000ffe2    00000002     
+                  0000ffe2    00000002     bsp.obj (.int17)
+
+USART1TX   0    0000ffe4    00000002     
+                  0000ffe4    00000002     rts430x_lc_rd_eabi.lib : int18.obj (.int18)
+
+USART1RX   0    0000ffe6    00000002     
+                  0000ffe6    00000002     bsp.obj (.int19)
+
+PORT1      0    0000ffe8    00000002     
+                  0000ffe8    00000002     bsp.obj (.int20)
+
+TIMERA1    0    0000ffea    00000002     
+                  0000ffea    00000002     rts430x_lc_rd_eabi.lib : int21.obj (.int21)
+
+TIMERA0    0    0000ffec    00000002     
+                  0000ffec    00000002     bsp.obj (.int22)
+
+ADC12      0    0000ffee    00000002     
+                  0000ffee    00000002     rts430x_lc_rd_eabi.lib : int23.obj (.int23)
+
+USCIAB0TX 
+*          0    0000fff0    00000002     
+                  0000fff0    00000002     rts430x_lc_rd_eabi.lib : int24.obj (.int24)
+
+USCIAB0RX 
+*          0    0000fff2    00000002     
+                  0000fff2    00000002     rts430x_lc_rd_eabi.lib : int25.obj (.int25)
+
+WDT        0    0000fff4    00000002     
+                  0000fff4    00000002     bsp.obj (.int26)
+
+COMPARATORA 
+*          0    0000fff6    00000002     
+                  0000fff6    00000002     rts430x_lc_rd_eabi.lib : int27.obj (.int27)
+
+TIMERB1    0    0000fff8    00000002     
+                  0000fff8    00000002     bsp.obj (.int28)
+
+TIMERB0    0    0000fffa    00000002     
+                  0000fffa    00000002     bsp.obj (.int29)
+
+NMI        0    0000fffc    00000002     
+                  0000fffc    00000002     bsp.obj (.int30)
+
+.reset     0    0000fffe    00000002     
+                  0000fffe    00000002     rts430x_lc_rd_eabi.lib : boot.obj (.reset)
+
+.text      0    00010000    000014f2     
+                  00010000    0000030a     hal_pin.obj (.text:hal_pin_config)
+                  0001030a    00000272     uart.obj (.text:configUSARTUart)
+                  0001057c    0000019c     hal_cc2500.obj (.text:hal_cc2500_WriteRFSettings)
+                  00010718    0000018c     bsp.obj (.text:bsp_Init)
+                  000108a4    00000130     hal_cc2500.obj (.text:hal_cc2500_receivePacket)
+                  000109d4    000000d6     hal_cc2500.obj (.text:hal_cc2500_sendPacket)
+                  00010aaa    00000096     main.obj (.text:main)
+                  00010b40    00000078     uart.obj (.text:enableUartRx)
+                  00010bb8    00000070     hal_cc2500.obj (.text:hal_cc2500_writeBurstReg)
+                  00010c28    0000006c     rts430x_lc_rd_eabi.lib : autoinit_wdt.obj (.text:_auto_init_hold_wdt)
+                  00010c94    00000068                            : copy_decompress_rle.obj (.text:__TI_decompress_rle_core)
+                  00010cfc    00000066     main.obj (.text:procesar_uart)
+                  00010d62    0000005e     hal_cc2500.obj (.text:hal_cc2500_readBurstReg)
+                  00010dc0    0000005c     hal_pin.obj (.text:hal_pin_out)
+                  00010e1c    00000058     rts430x_lc_rd_eabi.lib : div32u.obj (.text)
+                  00010e74    00000056     uart.obj (.text:setUartRxBuffer)
+                  00010eca    00000056     uart.obj (.text:setUartTxBuffer)
+                  00010f20    00000052     hal_cc2500.obj (.text:hal_cc2500_powerupReset)
+                  00010f72    00000052     uart.obj (.text:initUartPort)
+                  00010fc4    00000046     uart.obj (.text:initBufferDefaults)
+                  0001100a    00000044     hal_cc2500.obj (.text:hal_cc2500_writeReg)
+                  0001104e    00000042     hal_usci_spi.obj (.text:spi1_setup)
+                  00011090    0000003e     hal_usci_spi.obj (.text:spi1_wr)
+                  000110ce    0000003a     hal_cc2500.obj (.text:hal_cc2500_readReg)
+                  00011108    0000003a     hal_cc2500.obj (.text:hal_cc2500_readStatus)
+                  00011142    00000036     hal_pin.obj (.text:hal_pin_toggle)
+                  00011178    00000032     hal_cc2500.obj (.text:hal_cc2500_status)
+                  000111aa    00000032     hal_pin.obj (.text:hal_pin_init)
+                  000111dc    00000032     hal_usci_spi.obj (.text:spi1_rxFinish)
+                  0001120e    00000030     hal_cc2500.obj (.text:hal_cc2500_strobe)
+                  0001123e    00000030     hal_cc2500.obj (.text:hal_cc2500_wakeup)
+                  0001126e    00000030     hal_pin.obj (.text:hal_pin_in)
+                  0001129e    00000030     hal_pin.obj (.text:hal_pin_intGetFlag)
+                  000112ce    0000002c     hal_pin.obj (.text:hal_pin_intClearFlag)
+                  000112fa    0000002c     uart.obj (.text:initUartDriver)
+                  00011326    0000002a     hal_usci_spi.obj (.text:spi1_txBufReady)
+                  00011350    00000028     hal_pin.obj (.text:hal_pin_intDisable)
+                  00011378    00000028     hal_pin.obj (.text:hal_pin_intEnable)
+                  000113a0    00000024     rts430x_lc_rd_eabi.lib : copy_zero_init.obj (.text:decompress:ZI:__TI_zero_init)
+                  000113c4    0000001e     hal_usci_spi.obj (.text:spi1_write)
+                  000113e2    0000001a     bsp.obj (.text:RF_SendPacket)
+                  000113fc    0000001a     bsp.obj (.text:bsp_msDelay)
+                  00011416    00000016     rts430x_lc_rd_eabi.lib : mult16_hw.obj (.text)
+                  0001142c    00000016     bsp.obj (.text:uart_rxData)
+                  00011442    00000014     main.obj (.text:app_TimerISR_1ms)
+                  00011456    00000014     bsp.obj (.text:led_Off)
+                  0001146a    00000014     rts430x_lc_rd_eabi.lib : memcpy.obj (.text:memcpy)
+                  0001147e    00000012                            : copy_decompress_none.obj (.text:decompress:none:__TI_decompress_none)
+                  00011490    00000012     bsp.obj (.text:led_Toggle)
+                  000114a2    00000010     uart.obj (.text:usart1_rx_char_ISR)
+                  000114b2    0000000c     hal_usci_spi.obj (.text:spi1_busy)
+                  000114be    0000000a     bsp.obj (.text:RF_PwrUpRx)
+                  000114c8    0000000a     rts430x_lc_rd_eabi.lib : lsl16.obj (.text)
+                  000114d2    0000000a     hal_usci_spi.obj (.text:spi1_start)
+                  000114dc    00000006     rts430x_lc_rd_eabi.lib : copy_decompress_rle.obj (.text:decompress:rle24:__TI_decompress_rle24)
+                  000114e2    00000006     bsp.obj (.text:getDato)
+                  000114e8    00000004     rts430x_lc_rd_eabi.lib : pre_init.obj (.text:_system_pre_init)
+                  000114ec    00000004                            : exit.obj (.text:abort)
+                  000114f0    00000002     main.obj (.text:app_RxPacketISR)
+
+
+LINKER GENERATED COPY TABLES
+
+__TI_cinit_table @ 00002450 records: 2, size/record: 8, table size: 16
+	.data: load addr=00002424, load size=00000019 bytes, run addr=000011e0, run size=00000023 bytes, compression=rle
+	.bss: load addr=0000244a, load size=00000006 bytes, run addr=00001100, run size=000000df bytes, compression=zero_init
+
+
+LINKER GENERATED HANDLER TABLE
+
+__TI_handler_table @ 0000243e records: 3, size/record: 4, table size: 12
+	index: 0, handler: __TI_zero_init
+	index: 1, handler: __TI_decompress_rle24
+	index: 2, handler: __TI_decompress_none
+
+
+GLOBAL SYMBOLS: SORTED ALPHABETICALLY BY Name 
+
+address   name                       
+-------   ----                       
+000001a0  ADC12CTL0                  
+000001a2  ADC12CTL1                  
+000001a6  ADC12IE                    
+000001a4  ADC12IFG                   
+000001a8  ADC12IV                    
+00000080  ADC12MCTL0                 
+00000081  ADC12MCTL1                 
+0000008a  ADC12MCTL10                
+0000008b  ADC12MCTL11                
+0000008c  ADC12MCTL12                
+0000008d  ADC12MCTL13                
+0000008e  ADC12MCTL14                
+0000008f  ADC12MCTL15                
+00000082  ADC12MCTL2                 
+00000083  ADC12MCTL3                 
+00000084  ADC12MCTL4                 
+00000085  ADC12MCTL5                 
+00000086  ADC12MCTL6                 
+00000087  ADC12MCTL7                 
+00000088  ADC12MCTL8                 
+00000089  ADC12MCTL9                 
+00000140  ADC12MEM0                  
+00000142  ADC12MEM1                  
+00000154  ADC12MEM10                 
+00000156  ADC12MEM11                 
+00000158  ADC12MEM12                 
+0000015a  ADC12MEM13                 
+0000015c  ADC12MEM14                 
+0000015e  ADC12MEM15                 
+00000144  ADC12MEM2                  
+00000146  ADC12MEM3                  
+00000148  ADC12MEM4                  
+0000014a  ADC12MEM5                  
+0000014c  ADC12MEM6                  
+0000014e  ADC12MEM7                  
+00000150  ADC12MEM8                  
+00000152  ADC12MEM9                  
+00000046  BTCNT1                     
+00000046  BTCNT12                    
+00000047  BTCNT2                     
+00000040  BTCTL                      
+000114ec  C$$EXIT                    
+00000059  CACTL1                     
+0000005a  CACTL2                     
+0000005b  CAPD                       
+000001c0  DAC12_0CTL                 
+000001c8  DAC12_0DAT                 
+000001c2  DAC12_1CTL                 
+000001ca  DAC12_1DAT                 
+000001d0  DMA0CTL                    
+000001d6  DMA0DA                     
+000001d6  DMA0DAL                    
+000001d2  DMA0SA                     
+000001d2  DMA0SAL                    
+000001da  DMA0SZ                     
+000001dc  DMA1CTL                    
+000001e2  DMA1DA                     
+000001e2  DMA1DAL                    
+000001de  DMA1SA                     
+000001de  DMA1SAL                    
+000001e6  DMA1SZ                     
+000001e8  DMA2CTL                    
+000001ee  DMA2DA                     
+000001ee  DMA2DAL                    
+000001ea  DMA2SA                     
+000001ea  DMA2SAL                    
+000001f2  DMA2SZ                     
+00000122  DMACTL0                    
+00000124  DMACTL1                    
+00000126  DMAIV                      
+000011e6  EstadoCalibration          
+00000128  FCTL1                      
+0000012a  FCTL2                      
+0000012c  FCTL3                      
+00000053  FLL_CTL0                   
+00000054  FLL_CTL1                   
+00000000  IE1                        
+00000001  IE2                        
+00000002  IFG1                       
+00000003  IFG2                       
+00002206  ISR_trap                   
+00000090  LCDACTL                    
+000000ac  LCDAPCTL0                  
+000000ad  LCDAPCTL1                  
+000000ae  LCDAVCTL0                  
+000000af  LCDAVCTL1                  
+00000091  LCDM1                      
+0000009a  LCDM10                     
+0000009b  LCDM11                     
+0000009c  LCDM12                     
+0000009d  LCDM13                     
+0000009e  LCDM14                     
+0000009f  LCDM15                     
+000000a0  LCDM16                     
+000000a1  LCDM17                     
+000000a2  LCDM18                     
+000000a3  LCDM19                     
+00000092  LCDM2                      
+000000a4  LCDM20                     
+00000093  LCDM3                      
+00000094  LCDM4                      
+00000095  LCDM5                      
+00000096  LCDM6                      
+00000097  LCDM7                      
+00000098  LCDM8                      
+00000099  LCDM9                      
+000011c4  LedRojo                    
+000011c8  LedVerde                   
+00000134  MAC                        
+00000136  MACS                       
+00000005  ME2                        
+00000130  MPY                        
+00000132  MPYS                       
+000000c0  OA0CTL0                    
+000000c1  OA0CTL1                    
+000000c2  OA1CTL0                    
+000000c3  OA1CTL1                    
+000000c4  OA2CTL0                    
+000000c5  OA2CTL1                    
+00000138  OP2                        
+0000000d  P10DIR                     
+00000009  P10IN                      
+0000000b  P10OUT                     
+0000000f  P10SEL                     
+00000022  P1DIR                      
+00000025  P1IE                       
+00000024  P1IES                      
+00000023  P1IFG                      
+00000020  P1IN                       
+00000021  P1OUT                      
+00000026  P1SEL                      
+0000002a  P2DIR                      
+0000002d  P2IE                       
+0000002c  P2IES                      
+0000002b  P2IFG                      
+00000028  P2IN                       
+00000029  P2OUT                      
+0000002e  P2SEL                      
+0000001a  P3DIR                      
+00000018  P3IN                       
+00000019  P3OUT                      
+0000001b  P3SEL                      
+0000001e  P4DIR                      
+0000001c  P4IN                       
+0000001d  P4OUT                      
+0000001f  P4SEL                      
+00000032  P5DIR                      
+00000030  P5IN                       
+00000031  P5OUT                      
+00000033  P5SEL                      
+00000036  P6DIR                      
+00000034  P6IN                       
+00000035  P6OUT                      
+00000037  P6SEL                      
+0000003c  P7DIR                      
+00000038  P7IN                       
+0000003a  P7OUT                      
+0000003e  P7SEL                      
+0000003d  P8DIR                      
+00000039  P8IN                       
+0000003b  P8OUT                      
+0000003f  P8SEL                      
+0000000c  P9DIR                      
+00000008  P9IN                       
+0000000a  P9OUT                      
+0000000e  P9SEL                      
+0000003c  PADIR                      
+00000038  PAIN                       
+0000003a  PAOUT                      
+0000003e  PASEL                      
+0000000c  PBDIR                      
+00000008  PBIN                       
+0000000a  PBOUT                      
+0000000e  PBSEL                      
+0000219a  Port1_ISR                  
+0000013c  RESHI                      
+0000013a  RESLO                      
+000114be  RF_PwrUpRx                 
+000113e2  RF_SendPacket              
+00000041  RTCCTL                     
+0000004c  RTCDATE                    
+0000004c  RTCDAY                     
+0000004d  RTCMON                     
+00000042  RTCNT1                     
+00000043  RTCNT2                     
+00000044  RTCNT3                     
+00000045  RTCNT4                     
+00000042  RTCTIM0                    
+00000044  RTCTIM1                    
+00000040  RTCTL                      
+0000004e  RTCYEAR                    
+0000004f  RTCYEARH                   
+0000004e  RTCYEARL                   
+00000050  SCFI0                      
+00000051  SCFI1                      
+00000052  SCFQCTL                    
+0000013e  SUMEXT                     
+00000056  SVSCTL                     
+000011cc  Switch1                    
+00000172  TACCR0                     
+00000174  TACCR1                     
+00000176  TACCR2                     
+00000162  TACCTL0                    
+00000164  TACCTL1                    
+00000166  TACCTL2                    
+00000160  TACTL                      
+0000012e  TAIV                       
+00000170  TAR                        
+00000192  TBCCR0                     
+00000194  TBCCR1                     
+00000196  TBCCR2                     
+00000198  TBCCR3                     
+0000019a  TBCCR4                     
+0000019c  TBCCR5                     
+0000019e  TBCCR6                     
+00000182  TBCCTL0                    
+00000184  TBCCTL1                    
+00000186  TBCCTL2                    
+00000188  TBCCTL3                    
+0000018a  TBCCTL4                    
+0000018c  TBCCTL5                    
+0000018e  TBCCTL6                    
+00000180  TBCTL                      
+0000011e  TBIV                       
+00000190  TBR                        
+000021c2  Tb1_ISR                    
+0000007c  U1BR0                      
+0000007d  U1BR1                      
+00000078  U1CTL                      
+0000007b  U1MCTL                     
+0000007a  U1RCTL                     
+0000007e  U1RXBUF                    
+00000079  U1TCTL                     
+0000007f  U1TXBUF                    
+0000005d  UCA0ABCTL                  
+00000062  UCA0BR0                    
+00000063  UCA0BR1                    
+00000060  UCA0CTL0                   
+00000061  UCA0CTL1                   
+0000005f  UCA0IRRCTL                 
+0000005e  UCA0IRTCTL                 
+00000064  UCA0MCTL                   
+00000066  UCA0RXBUF                  
+00000065  UCA0STAT                   
+00000067  UCA0TXBUF                  
+0000006a  UCB0BR0                    
+0000006b  UCB0BR1                    
+00000068  UCB0CTL0                   
+00000069  UCB0CTL1                   
+0000006c  UCB0I2CIE                  
+00000118  UCB0I2COA                  
+0000011a  UCB0I2CSA                  
+0000006e  UCB0RXBUF                  
+0000006d  UCB0STAT                   
+0000006f  UCB0TXBUF                  
+00000120  WDTCTL                     
+00002100  __STACK_END                
+00000078  __STACK_SIZE               
+00002450  __TI_CINIT_Base            
+00002460  __TI_CINIT_Limit           
+0000243e  __TI_Handler_Table_Base    
+0000244a  __TI_Handler_Table_Limit   
+UNDEFED   __TI_INITARRAY_Base        
+UNDEFED   __TI_INITARRAY_Limit       
+00002200  __TI_ISR_TRAP              
+0001147e  __TI_decompress_none       
+000114dc  __TI_decompress_rle24      
+0000ffdc  __TI_int14                 
+0000ffde  __TI_int15                 
+0000ffe0  __TI_int16                 
+0000ffe2  __TI_int17                 
+0000ffe4  __TI_int18                 
+0000ffe6  __TI_int19                 
+0000ffe8  __TI_int20                 
+0000ffea  __TI_int21                 
+0000ffec  __TI_int22                 
+0000ffee  __TI_int23                 
+0000fff0  __TI_int24                 
+0000fff2  __TI_int25                 
+0000fff4  __TI_int26                 
+0000fff6  __TI_int27                 
+0000fff8  __TI_int28                 
+0000fffa  __TI_int29                 
+0000fffc  __TI_int30                 
+000113a0  __TI_zero_init             
+ffffffff  __binit__                  
+ffffffff  __c_args__                 
+00010e1c  __mspabi_divul             
+00011416  __mspabi_mpyi_hw           
+00010e1c  __mspabi_remul             
+000114c8  __mspabi_slli              
+00010c28  _auto_init_hold_wdt        
+000021e6  _c_int00_noargs_noexit     
+0000fffe  _reset_vector              
+00002088  _stack                     
+000114e8  _system_pre_init           
+000114ec  abort                      
+000114f0  app_RxPacketISR            
+00011442  app_TimerISR_1ms           
+ffffffff  binit                      
+000011d4  bspFlags                   
+00010718  bsp_Init                   
+000011d6  bsp_contMs                 
+000011fc  bsp_contTAR                
+000113fc  bsp_msDelay                
+000023ca  cc_LNAEN                   
+000023c0  cc_PAEN                    
+000023d4  cc_gdo0                    
+000023de  cc_gdo2                    
+00002406  cc_spiCLK                  
+000023f2  cc_spiSIMO                 
+000023fc  cc_spiSOMI                 
+000023e8  cc_spinCS                  
+000011f2  checkSum                   
+00001100  cnf                        
+0001030a  configUSARTUart            
+00001200  cont                       
+000011f4  contador                   
+000011e8  correccion                 
+000011d8  datoRx                     
+00010b40  enableUartRx               
+000011e3  estado                     
+000011e5  flagCalibration            
+000011f0  flagEnviado                
+000011ec  flagRecibido               
+000011ea  flag_calibracion_automatica
+000011fb  flag_wakeup                
+000011e2  flagdespertar              
+000114e2  getDato                    
+0001057c  hal_cc2500_WriteRFSettings 
+00010f20  hal_cc2500_powerupReset    
+00010d62  hal_cc2500_readBurstReg    
+000110ce  hal_cc2500_readReg         
+00011108  hal_cc2500_readStatus      
+000108a4  hal_cc2500_receivePacket   
+000109d4  hal_cc2500_sendPacket      
+00011178  hal_cc2500_status          
+0001120e  hal_cc2500_strobe          
+0001123e  hal_cc2500_wakeup          
+00010bb8  hal_cc2500_writeBurstReg   
+0001100a  hal_cc2500_writeReg        
+00010000  hal_pin_config             
+0001126e  hal_pin_in                 
+000111aa  hal_pin_init               
+000112ce  hal_pin_intClearFlag       
+00011350  hal_pin_intDisable         
+00011378  hal_pin_intEnable          
+0001129e  hal_pin_intGetFlag         
+00010dc0  hal_pin_out                
+00011142  hal_pin_toggle             
+000011d9  i                          
+00010fc4  initBufferDefaults         
+000112fa  initUartDriver             
+00010f72  initUartPort               
+00011456  led_Off                    
+00011490  led_Toggle                 
+000011ee  length                     
+00010aaa  main                       
+0001146a  memcpy                     
+000011e4  net_myAddr                 
+00001202  paTable                    
+000011fa  paTableLen                 
+000023a2  pinLedRojo                 
+00002398  pinLedVerde                
+00002208  pinPort                    
+000023ac  pinSW1                     
+000023b6  pinSW2                     
+00002100  port2_ISR                  
+00010cfc  procesar_uart              
+0000115a  prtInfList                 
+000011da  rf_rxAddr                  
+0000116e  rf_rxBuffer                
+000011db  rf_rxLen                   
+000011dc  rf_rxLqi                   
+000011dd  rf_rxRssi                  
+000011de  rxBuffer                   
+00001194  rxBufferRecibi             
+00001182  rxPacket                   
+00010e74  setUartRxBuffer            
+00010eca  setUartTxBuffer            
+000114b2  spi1_busy                  
+000111dc  spi1_rxFinish              
+0001104e  spi1_setup                 
+000114d2  spi1_start                 
+00011326  spi1_txBufReady            
+00011090  spi1_wr                    
+000113c4  spi1_write                 
+000011d0  spiBaseAdd                 
+000011e0  tar_segundo                
+000011e7  tiem_envio                 
+000011a4  uartRxBuf                  
+000011b4  uartTxBuf                  
+0000112e  uartUsartRegs              
+0000241a  uart_RX                    
+00002410  uart_TX                    
+0001142c  uart_rxData                
+0000215c  usart1_rx                  
+000114a2  usart1_rx_char_ISR         
+
+
+GLOBAL SYMBOLS: SORTED BY Symbol Address 
+
+address   name                       
+-------   ----                       
+00000000  IE1                        
+00000001  IE2                        
+00000002  IFG1                       
+00000003  IFG2                       
+00000005  ME2                        
+00000008  P9IN                       
+00000008  PBIN                       
+00000009  P10IN                      
+0000000a  P9OUT                      
+0000000a  PBOUT                      
+0000000b  P10OUT                     
+0000000c  P9DIR                      
+0000000c  PBDIR                      
+0000000d  P10DIR                     
+0000000e  P9SEL                      
+0000000e  PBSEL                      
+0000000f  P10SEL                     
+00000018  P3IN                       
+00000019  P3OUT                      
+0000001a  P3DIR                      
+0000001b  P3SEL                      
+0000001c  P4IN                       
+0000001d  P4OUT                      
+0000001e  P4DIR                      
+0000001f  P4SEL                      
+00000020  P1IN                       
+00000021  P1OUT                      
+00000022  P1DIR                      
+00000023  P1IFG                      
+00000024  P1IES                      
+00000025  P1IE                       
+00000026  P1SEL                      
+00000028  P2IN                       
+00000029  P2OUT                      
+0000002a  P2DIR                      
+0000002b  P2IFG                      
+0000002c  P2IES                      
+0000002d  P2IE                       
+0000002e  P2SEL                      
+00000030  P5IN                       
+00000031  P5OUT                      
+00000032  P5DIR                      
+00000033  P5SEL                      
+00000034  P6IN                       
+00000035  P6OUT                      
+00000036  P6DIR                      
+00000037  P6SEL                      
+00000038  P7IN                       
+00000038  PAIN                       
+00000039  P8IN                       
+0000003a  P7OUT                      
+0000003a  PAOUT                      
+0000003b  P8OUT                      
+0000003c  P7DIR                      
+0000003c  PADIR                      
+0000003d  P8DIR                      
+0000003e  P7SEL                      
+0000003e  PASEL                      
+0000003f  P8SEL                      
+00000040  BTCTL                      
+00000040  RTCTL                      
+00000041  RTCCTL                     
+00000042  RTCNT1                     
+00000042  RTCTIM0                    
+00000043  RTCNT2                     
+00000044  RTCNT3                     
+00000044  RTCTIM1                    
+00000045  RTCNT4                     
+00000046  BTCNT1                     
+00000046  BTCNT12                    
+00000047  BTCNT2                     
+0000004c  RTCDATE                    
+0000004c  RTCDAY                     
+0000004d  RTCMON                     
+0000004e  RTCYEAR                    
+0000004e  RTCYEARL                   
+0000004f  RTCYEARH                   
+00000050  SCFI0                      
+00000051  SCFI1                      
+00000052  SCFQCTL                    
+00000053  FLL_CTL0                   
+00000054  FLL_CTL1                   
+00000056  SVSCTL                     
+00000059  CACTL1                     
+0000005a  CACTL2                     
+0000005b  CAPD                       
+0000005d  UCA0ABCTL                  
+0000005e  UCA0IRTCTL                 
+0000005f  UCA0IRRCTL                 
+00000060  UCA0CTL0                   
+00000061  UCA0CTL1                   
+00000062  UCA0BR0                    
+00000063  UCA0BR1                    
+00000064  UCA0MCTL                   
+00000065  UCA0STAT                   
+00000066  UCA0RXBUF                  
+00000067  UCA0TXBUF                  
+00000068  UCB0CTL0                   
+00000069  UCB0CTL1                   
+0000006a  UCB0BR0                    
+0000006b  UCB0BR1                    
+0000006c  UCB0I2CIE                  
+0000006d  UCB0STAT                   
+0000006e  UCB0RXBUF                  
+0000006f  UCB0TXBUF                  
+00000078  U1CTL                      
+00000078  __STACK_SIZE               
+00000079  U1TCTL                     
+0000007a  U1RCTL                     
+0000007b  U1MCTL                     
+0000007c  U1BR0                      
+0000007d  U1BR1                      
+0000007e  U1RXBUF                    
+0000007f  U1TXBUF                    
+00000080  ADC12MCTL0                 
+00000081  ADC12MCTL1                 
+00000082  ADC12MCTL2                 
+00000083  ADC12MCTL3                 
+00000084  ADC12MCTL4                 
+00000085  ADC12MCTL5                 
+00000086  ADC12MCTL6                 
+00000087  ADC12MCTL7                 
+00000088  ADC12MCTL8                 
+00000089  ADC12MCTL9                 
+0000008a  ADC12MCTL10                
+0000008b  ADC12MCTL11                
+0000008c  ADC12MCTL12                
+0000008d  ADC12MCTL13                
+0000008e  ADC12MCTL14                
+0000008f  ADC12MCTL15                
+00000090  LCDACTL                    
+00000091  LCDM1                      
+00000092  LCDM2                      
+00000093  LCDM3                      
+00000094  LCDM4                      
+00000095  LCDM5                      
+00000096  LCDM6                      
+00000097  LCDM7                      
+00000098  LCDM8                      
+00000099  LCDM9                      
+0000009a  LCDM10                     
+0000009b  LCDM11                     
+0000009c  LCDM12                     
+0000009d  LCDM13                     
+0000009e  LCDM14                     
+0000009f  LCDM15                     
+000000a0  LCDM16                     
+000000a1  LCDM17                     
+000000a2  LCDM18                     
+000000a3  LCDM19                     
+000000a4  LCDM20                     
+000000ac  LCDAPCTL0                  
+000000ad  LCDAPCTL1                  
+000000ae  LCDAVCTL0                  
+000000af  LCDAVCTL1                  
+000000c0  OA0CTL0                    
+000000c1  OA0CTL1                    
+000000c2  OA1CTL0                    
+000000c3  OA1CTL1                    
+000000c4  OA2CTL0                    
+000000c5  OA2CTL1                    
+00000118  UCB0I2COA                  
+0000011a  UCB0I2CSA                  
+0000011e  TBIV                       
+00000120  WDTCTL                     
+00000122  DMACTL0                    
+00000124  DMACTL1                    
+00000126  DMAIV                      
+00000128  FCTL1                      
+0000012a  FCTL2                      
+0000012c  FCTL3                      
+0000012e  TAIV                       
+00000130  MPY                        
+00000132  MPYS                       
+00000134  MAC                        
+00000136  MACS                       
+00000138  OP2                        
+0000013a  RESLO                      
+0000013c  RESHI                      
+0000013e  SUMEXT                     
+00000140  ADC12MEM0                  
+00000142  ADC12MEM1                  
+00000144  ADC12MEM2                  
+00000146  ADC12MEM3                  
+00000148  ADC12MEM4                  
+0000014a  ADC12MEM5                  
+0000014c  ADC12MEM6                  
+0000014e  ADC12MEM7                  
+00000150  ADC12MEM8                  
+00000152  ADC12MEM9                  
+00000154  ADC12MEM10                 
+00000156  ADC12MEM11                 
+00000158  ADC12MEM12                 
+0000015a  ADC12MEM13                 
+0000015c  ADC12MEM14                 
+0000015e  ADC12MEM15                 
+00000160  TACTL                      
+00000162  TACCTL0                    
+00000164  TACCTL1                    
+00000166  TACCTL2                    
+00000170  TAR                        
+00000172  TACCR0                     
+00000174  TACCR1                     
+00000176  TACCR2                     
+00000180  TBCTL                      
+00000182  TBCCTL0                    
+00000184  TBCCTL1                    
+00000186  TBCCTL2                    
+00000188  TBCCTL3                    
+0000018a  TBCCTL4                    
+0000018c  TBCCTL5                    
+0000018e  TBCCTL6                    
+00000190  TBR                        
+00000192  TBCCR0                     
+00000194  TBCCR1                     
+00000196  TBCCR2                     
+00000198  TBCCR3                     
+0000019a  TBCCR4                     
+0000019c  TBCCR5                     
+0000019e  TBCCR6                     
+000001a0  ADC12CTL0                  
+000001a2  ADC12CTL1                  
+000001a4  ADC12IFG                   
+000001a6  ADC12IE                    
+000001a8  ADC12IV                    
+000001c0  DAC12_0CTL                 
+000001c2  DAC12_1CTL                 
+000001c8  DAC12_0DAT                 
+000001ca  DAC12_1DAT                 
+000001d0  DMA0CTL                    
+000001d2  DMA0SA                     
+000001d2  DMA0SAL                    
+000001d6  DMA0DA                     
+000001d6  DMA0DAL                    
+000001da  DMA0SZ                     
+000001dc  DMA1CTL                    
+000001de  DMA1SA                     
+000001de  DMA1SAL                    
+000001e2  DMA1DA                     
+000001e2  DMA1DAL                    
+000001e6  DMA1SZ                     
+000001e8  DMA2CTL                    
+000001ea  DMA2SA                     
+000001ea  DMA2SAL                    
+000001ee  DMA2DA                     
+000001ee  DMA2DAL                    
+000001f2  DMA2SZ                     
+00001100  cnf                        
+0000112e  uartUsartRegs              
+0000115a  prtInfList                 
+0000116e  rf_rxBuffer                
+00001182  rxPacket                   
+00001194  rxBufferRecibi             
+000011a4  uartRxBuf                  
+000011b4  uartTxBuf                  
+000011c4  LedRojo                    
+000011c8  LedVerde                   
+000011cc  Switch1                    
+000011d0  spiBaseAdd                 
+000011d4  bspFlags                   
+000011d6  bsp_contMs                 
+000011d8  datoRx                     
+000011d9  i                          
+000011da  rf_rxAddr                  
+000011db  rf_rxLen                   
+000011dc  rf_rxLqi                   
+000011dd  rf_rxRssi                  
+000011de  rxBuffer                   
+000011e0  tar_segundo                
+000011e2  flagdespertar              
+000011e3  estado                     
+000011e4  net_myAddr                 
+000011e5  flagCalibration            
+000011e6  EstadoCalibration          
+000011e7  tiem_envio                 
+000011e8  correccion                 
+000011ea  flag_calibracion_automatica
+000011ec  flagRecibido               
+000011ee  length                     
+000011f0  flagEnviado                
+000011f2  checkSum                   
+000011f4  contador                   
+000011fa  paTableLen                 
+000011fb  flag_wakeup                
+000011fc  bsp_contTAR                
+00001200  cont                       
+00001202  paTable                    
+00002088  _stack                     
+00002100  __STACK_END                
+00002100  port2_ISR                  
+0000215c  usart1_rx                  
+0000219a  Port1_ISR                  
+000021c2  Tb1_ISR                    
+000021e6  _c_int00_noargs_noexit     
+00002200  __TI_ISR_TRAP              
+00002206  ISR_trap                   
+00002208  pinPort                    
+00002398  pinLedVerde                
+000023a2  pinLedRojo                 
+000023ac  pinSW1                     
+000023b6  pinSW2                     
+000023c0  cc_PAEN                    
+000023ca  cc_LNAEN                   
+000023d4  cc_gdo0                    
+000023de  cc_gdo2                    
+000023e8  cc_spinCS                  
+000023f2  cc_spiSIMO                 
+000023fc  cc_spiSOMI                 
+00002406  cc_spiCLK                  
+00002410  uart_TX                    
+0000241a  uart_RX                    
+0000243e  __TI_Handler_Table_Base    
+0000244a  __TI_Handler_Table_Limit   
+00002450  __TI_CINIT_Base            
+00002460  __TI_CINIT_Limit           
+0000ffdc  __TI_int14                 
+0000ffde  __TI_int15                 
+0000ffe0  __TI_int16                 
+0000ffe2  __TI_int17                 
+0000ffe4  __TI_int18                 
+0000ffe6  __TI_int19                 
+0000ffe8  __TI_int20                 
+0000ffea  __TI_int21                 
+0000ffec  __TI_int22                 
+0000ffee  __TI_int23                 
+0000fff0  __TI_int24                 
+0000fff2  __TI_int25                 
+0000fff4  __TI_int26                 
+0000fff6  __TI_int27                 
+0000fff8  __TI_int28                 
+0000fffa  __TI_int29                 
+0000fffc  __TI_int30                 
+0000fffe  _reset_vector              
+00010000  hal_pin_config             
+0001030a  configUSARTUart            
+0001057c  hal_cc2500_WriteRFSettings 
+00010718  bsp_Init                   
+000108a4  hal_cc2500_receivePacket   
+000109d4  hal_cc2500_sendPacket      
+00010aaa  main                       
+00010b40  enableUartRx               
+00010bb8  hal_cc2500_writeBurstReg   
+00010c28  _auto_init_hold_wdt        
+00010cfc  procesar_uart              
+00010d62  hal_cc2500_readBurstReg    
+00010dc0  hal_pin_out                
+00010e1c  __mspabi_divul             
+00010e1c  __mspabi_remul             
+00010e74  setUartRxBuffer            
+00010eca  setUartTxBuffer            
+00010f20  hal_cc2500_powerupReset    
+00010f72  initUartPort               
+00010fc4  initBufferDefaults         
+0001100a  hal_cc2500_writeReg        
+0001104e  spi1_setup                 
+00011090  spi1_wr                    
+000110ce  hal_cc2500_readReg         
+00011108  hal_cc2500_readStatus      
+00011142  hal_pin_toggle             
+00011178  hal_cc2500_status          
+000111aa  hal_pin_init               
+000111dc  spi1_rxFinish              
+0001120e  hal_cc2500_strobe          
+0001123e  hal_cc2500_wakeup          
+0001126e  hal_pin_in                 
+0001129e  hal_pin_intGetFlag         
+000112ce  hal_pin_intClearFlag       
+000112fa  initUartDriver             
+00011326  spi1_txBufReady            
+00011350  hal_pin_intDisable         
+00011378  hal_pin_intEnable          
+000113a0  __TI_zero_init             
+000113c4  spi1_write                 
+000113e2  RF_SendPacket              
+000113fc  bsp_msDelay                
+00011416  __mspabi_mpyi_hw           
+0001142c  uart_rxData                
+00011442  app_TimerISR_1ms           
+00011456  led_Off                    
+0001146a  memcpy                     
+0001147e  __TI_decompress_none       
+00011490  led_Toggle                 
+000114a2  usart1_rx_char_ISR         
+000114b2  spi1_busy                  
+000114be  RF_PwrUpRx                 
+000114c8  __mspabi_slli              
+000114d2  spi1_start                 
+000114dc  __TI_decompress_rle24      
+000114e2  getDato                    
+000114e8  _system_pre_init           
+000114ec  C$$EXIT                    
+000114ec  abort                      
+000114f0  app_RxPacketISR            
+ffffffff  __binit__                  
+ffffffff  __c_args__                 
+ffffffff  binit                      
+UNDEFED   __TI_INITARRAY_Base        
+UNDEFED   __TI_INITARRAY_Limit       
+
+[398 symbols]

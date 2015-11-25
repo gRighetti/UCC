@@ -1,0 +1,1 @@
+"./main.obj" "./bsp/hal/hal_cc2500.obj" "./bsp/hal/hal_pin.obj" "./bsp/hal/hal_usci_spi.obj" "./bsp/hal/uart.obj" "./bsp/bsp.obj" "../lnk_msp430fg4619.cmd" -l"libc.a" 
